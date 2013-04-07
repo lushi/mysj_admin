@@ -12,20 +12,24 @@
 #
 
 class Student < ActiveRecord::Base
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :given_name, :surname, :email, :password, :password_confirmation
   has_secure_password
 
   before_save { |s| s.email = email.downcase }
 
-  validates :name,
+  validates :given_name,
   	presence: true,
-  	length: { maximum: 50 }
+  	length: { maximum: 25 }
+
+  validates :surname,
+    presence: true,
+    length: { maximum: 25 }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email,
   	presence: true,
-  	format: { with: VALID_EMAIL_REGEX },
-  	uniqueness: true
+   	format: { with: VALID_EMAIL_REGEX },
+  	uniqueness: { case_sensitive: false }
 
   validates :password,
   	presence: true,
