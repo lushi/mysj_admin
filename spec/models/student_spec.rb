@@ -1,0 +1,108 @@
+require 'spec_helper'
+
+describe Student do
+
+	before(:each) do
+		@student = Student.new(
+			given_name: "Joe",
+			surname: "Smith",
+			email: "jsmith@example.com",
+			password: "foobar12",
+			password_confirmation: "foobar12"
+			)
+	end
+
+	subject { @student }
+
+	it { should respond_to(:given_name) }
+	it { should respond_to(:surname) }
+	it { should respond_to(:email) }
+	it { should respond_to(:password) }
+	it { should respond_to(:password_confirmation) }
+	it { should respond_to(:password_digest) }
+
+	it { should respond_to(:authenticate) }
+
+	it { should be_valid }
+
+	describe "when given_name is not present" do
+		before { @student.given_name = " "}
+		it { should_not be_valid }
+	end
+
+	describe "when surname is not present" do
+		before { @student.surname = " "}
+		it { should_not be_valid }
+	end
+
+	describe "when email is not present" do
+		before { @student.email = " "}
+		it { should_not be_valid }
+	end
+
+	describe "when given_name is too long" do
+		before { @student.given_name = "a" * 26 }
+		it { should_not be_valid }
+	end
+
+	describe "when surename is too long" do
+		before { @student.surname = "a" * 26 }
+		it { should_not be_valid }
+	end
+
+	describe "when email format is invalid" do
+		it "should be invalid" do
+      addresses = %w[student@foo,com user_at_foo.org example.student@foo.
+                     foo@bar_baz.com foo@bar+baz.com]
+      addresses.each do |invalid_address|
+        @student.email = invalid_address
+        @student.should_not be_valid
+      end
+    end
+  end
+
+  describe "when email is already taken" do
+  	before do
+  		student_same_email = @student.dup
+  		@student.email.upcase!
+  		student_same_email.save
+  	end
+  	it {should_not be_valid }
+  end
+
+  describe "when password is not present" do
+  	before { @student.password = @student.password_confirmation = " " }
+  	it { should_not be_valid }
+  end
+
+  describe "when password doesn't match confirmation" do
+  	before { @student.password_confirmation = "mismatch" }
+  	it { should_not be_valid }
+  end
+
+  describe "when password confirmation is nil" do
+  	before { @student.password_confirmation = nil }
+  	it { should_not be_valid }
+  end
+
+  describe "with a password that's too short" do
+  	before { @student.password = @student.password_confirmation = "a" * 5 }
+  	it { should_not be_valid }
+  end
+
+  describe "return value of authenticate method" do
+  	before { @student.save }
+  	let(:found_user) { Student.find_by_email(@student.email) }
+
+  	describe "with valid password" do
+  		it { should == found_user.authenticate(@student.password) }
+  	end
+
+  	describe "with invalid password" do
+  		let(:student_for_invalid_password) { found_user.authenticate("invalid") }
+
+  		it { should_not == student_for_invalid_password }
+  		specify { student_for_invalid_password.should be_false }
+  	end
+  end
+end
