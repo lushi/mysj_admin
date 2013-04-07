@@ -11,14 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404172144) do
+ActiveRecord::Schema.define(:version => 20130404212837) do
 
   create_table "students", :force => true do |t|
-    t.string   "name"
+    t.string   "surname"
     t.string   "email"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
+    t.string   "given_name"
   end
 
   add_index "students", ["email"], :name => "index_students_on_email", :unique => true
