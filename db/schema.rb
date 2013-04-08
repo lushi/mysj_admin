@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404212837) do
+ActiveRecord::Schema.define(:version => 20130408164520) do
 
   create_table "students", :force => true do |t|
     t.string   "surname"
@@ -20,8 +20,10 @@ ActiveRecord::Schema.define(:version => 20130404212837) do
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.string   "given_name"
+    t.string   "auth_token"
   end
 
+  add_index "students", ["auth_token"], :name => "index_students_on_auth_token"
   add_index "students", ["email"], :name => "index_students_on_email", :unique => true
 
 end

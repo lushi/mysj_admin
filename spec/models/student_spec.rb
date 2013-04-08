@@ -20,7 +20,7 @@ describe Student do
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:password_digest) }
-
+  it { should respond_to(:auth_token) }
 	it { should respond_to(:authenticate) }
 
 	it { should be_valid }
@@ -104,5 +104,10 @@ describe Student do
   		it { should_not == student_for_invalid_password }
   		specify { student_for_invalid_password.should be_false }
   	end
+  end
+
+  describe "remember token" do
+    before { @student.save }
+    its(:auth_token) { should_not be_blank }
   end
 end

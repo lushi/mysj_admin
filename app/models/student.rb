@@ -16,6 +16,7 @@ class Student < ActiveRecord::Base
   has_secure_password
 
   before_save { |s| s.email = email.downcase }
+  before_save :create_auth_token
 
   validates :given_name,
   	presence: true,
@@ -37,4 +38,11 @@ class Student < ActiveRecord::Base
 
   validates :password_confirmation,
   	presence: true
+
+  private
+    def create_auth_token
+      begin
+        self.auth_token = SecureRandom.urlsafe_base64
+      end while Student.exists?(auth_token: self.auth_token)
+    end
 end
