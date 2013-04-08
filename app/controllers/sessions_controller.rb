@@ -1,5 +1,8 @@
 class SessionsController < ApplicationController
 	def new
+		if signed_in?
+			redirect_to "/students/#{current_student.id}" #NEED TO CHANGE!!! SHOULD ONLY BE ABLE TO VIEW OWN PROFILE
+		end
 	end
 
 	def create
