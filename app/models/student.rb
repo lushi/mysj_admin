@@ -9,10 +9,30 @@
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
 #  given_name      :string(255)
+#  auth_token      :string(255)
+#  sex             :string(255)
+#  date_of_birth   :date
+#  occupation      :string(255)
+#  street          :string(255)
+#  city            :string(255)
+#  state           :string(255)
+#  zipcode         :string(255)
+#  country         :string(255)
+#  shirt_size      :string(255)
+#  pants_size      :string(255)
+#  shoe_size       :string(255)
+#  active?         :boolean
+#  status          :string(255)
+#  generation      :integer
+#  concentration   :string(255)
 #
 
 class Student < ActiveRecord::Base
-  attr_accessible :given_name, :surname, :email, :password, :password_confirmation
+  attr_accessible(:given_name, :surname, :email, :password, :password_confirmation,
+                  :sex, :date_of_birth, :occupation, :street, :city, :state, :zipcode,
+                  :country, :shirt_size, :pants_size, :shoe_size, :status,
+                  :generation, :concentration)
+
   has_secure_password
 
   before_save { |s| s.email = email.downcase }

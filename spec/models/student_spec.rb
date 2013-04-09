@@ -1,3 +1,32 @@
+# == Schema Information
+#
+# Table name: students
+#
+#  id              :integer          not null, primary key
+#  surname         :string(255)
+#  email           :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string(255)
+#  given_name      :string(255)
+#  auth_token      :string(255)
+#  sex             :string(255)
+#  date_of_birth   :date
+#  occupation      :string(255)
+#  street          :string(255)
+#  city            :string(255)
+#  state           :string(255)
+#  zipcode         :string(255)
+#  country         :string(255)
+#  shirt_size      :string(255)
+#  pants_size      :string(255)
+#  shoe_size       :string(255)
+#  active?         :boolean
+#  status          :string(255)
+#  generation      :integer
+#  concentration   :string(255)
+#
+
 require 'spec_helper'
 
 describe Student do
@@ -22,6 +51,20 @@ describe Student do
 	it { should respond_to(:password_digest) }
   it { should respond_to(:auth_token) }
 	it { should respond_to(:authenticate) }
+  it { should respond_to(:date_of_birth) }
+  it { should respond_to(:sex) }
+  it { should respond_to(:occupation) }
+  it { should respond_to(:street) }
+  it { should respond_to(:city) }
+  it { should respond_to(:state) }
+  it { should respond_to(:zipcode) }
+  it { should respond_to(:country) }
+  it { should respond_to(:shirt_size) }
+  it { should respond_to(:pants_size) }
+  it { should respond_to(:shoe_size) }
+  it { should respond_to(:concentration) }
+  it { should respond_to(:status) }
+  it { should respond_to(:generation) }
 
 	it { should be_valid }
 
