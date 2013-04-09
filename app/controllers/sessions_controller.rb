@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 		student = Student.find_by_email(params[:session][:email].downcase)
 		if student && student.authenticate(params[:session][:password])
 			sign_in(student)
-			render 'new' #need to change!!
+			redirect_to "/students/#{current_student.id}" #need to change!!
 		else
 			flash.now[:error] = 'Oops! Invalid email/password combination'
 			render 'new'
@@ -18,6 +18,6 @@ class SessionsController < ApplicationController
 
 	def destroy
 		sign_out
-		redirect_to '/signin' #need to change!!
+		redirect_to '/signin'
 	end
 end
