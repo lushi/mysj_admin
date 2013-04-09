@@ -1,0 +1,17 @@
+<% provide(:title, "Update settings") %>
+<h1>Update settings</h1>
+
+<%= form_for(@student) do |f| %>
+	<%= render 'shared/error_messages' %>
+
+	<%= f.label :email %>
+	<%= f.email_field :email %>
+
+	<%= f.label :password %>
+	<%= f.password_field :password %>
+
+	<%= f.label :password_confirmation, "Confirm password" %>
+	<%= f.password_field :password_confirmation %>
+
+	<%= f.submit "Save changes" %>
+<% end %>

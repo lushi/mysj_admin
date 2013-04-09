@@ -1,7 +1,7 @@
 module SessionsHelper
 
 	def sign_in(student)
-		if params[:session][:remember_me] == "1"
+		if params[:session] && params[:session][:remember_me] == "1"
 			cookies.permanent[:auth_token] = student.auth_token
 		else
 			cookies[:auth_token] = student.auth_token
@@ -19,6 +19,10 @@ module SessionsHelper
 
 	def current_student
 		@current_student ||= Student.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
+	end
+
+	def current_student?(student)
+		student == current_student
 	end
 
 	def sign_out

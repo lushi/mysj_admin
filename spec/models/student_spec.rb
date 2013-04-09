@@ -21,10 +21,10 @@
 #  shirt_size      :string(255)
 #  pants_size      :string(255)
 #  shoe_size       :string(255)
-#  active?         :boolean
 #  status          :string(255)
 #  generation      :integer
 #  concentration   :string(255)
+#  enrolled_now    :boolean
 #
 
 require 'spec_helper'
@@ -65,6 +65,7 @@ describe Student do
   it { should respond_to(:concentration) }
   it { should respond_to(:status) }
   it { should respond_to(:generation) }
+  it { should respond_to(:enrolled_now?) }
 
 	it { should be_valid }
 

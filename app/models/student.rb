@@ -21,17 +21,17 @@
 #  shirt_size      :string(255)
 #  pants_size      :string(255)
 #  shoe_size       :string(255)
-#  active?         :boolean
 #  status          :string(255)
 #  generation      :integer
 #  concentration   :string(255)
+#  enrolled_now    :boolean
 #
 
 class Student < ActiveRecord::Base
   attr_accessible(:given_name, :surname, :email, :password, :password_confirmation,
                   :sex, :date_of_birth, :occupation, :street, :city, :state, :zipcode,
                   :country, :shirt_size, :pants_size, :shoe_size, :status,
-                  :generation, :concentration)
+                  :generation, :concentration, :enrolled_now?)
 
   has_secure_password
 

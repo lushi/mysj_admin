@@ -1,0 +1,10 @@
+<% provide(:title, 'Current students') %>
+<h1>Current students</h1>
+
+<ul>
+	<% @students.each do |student| %>
+	<li>
+		<%= link_to "#{student.given_name} #{student.surname}", student %>
+	</li>
+	<% end %>
+</ul>
