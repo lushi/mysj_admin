@@ -25,13 +25,15 @@
 #  generation      :integer
 #  concentration   :string(255)
 #  enrolled_now    :boolean
+#  home_phone      :string(255)
+#  cell_phone      :string(255)
 #
 
 class Student < ActiveRecord::Base
   attr_accessible(:given_name, :surname, :email, :password, :password_confirmation,
                   :sex, :date_of_birth, :occupation, :street, :city, :state, :zipcode,
                   :country, :shirt_size, :pants_size, :shoe_size, :status,
-                  :generation, :concentration, :enrolled_now?)
+                  :generation, :concentration, :enrolled_now, :home_phone, :cell_phone)
 
   has_secure_password
 

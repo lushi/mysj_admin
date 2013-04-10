@@ -1,0 +1,7 @@
+<li>
+	<%= link_to "#{student.given_name} #{student.surname}", student %>,
+	<%= student.status %>
+	<% if current_student.admin? && !current_student?(student) %>
+		| <%= link_to "delete", student, method: :delete, data: { confirm: "You sure? The student's information will be permanently deleted."} %>
+		<% end %>
+</li>

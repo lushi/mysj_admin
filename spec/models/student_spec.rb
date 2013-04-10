@@ -25,6 +25,8 @@
 #  generation      :integer
 #  concentration   :string(255)
 #  enrolled_now    :boolean
+#  home_phone      :string(255)
+#  cell_phone      :string(255)
 #
 
 require 'spec_helper'
@@ -66,8 +68,20 @@ describe Student do
   it { should respond_to(:status) }
   it { should respond_to(:generation) }
   it { should respond_to(:enrolled_now?) }
+  it { should respond_to(:admin) }
+  it { should respond_to(:authenticate) }
 
 	it { should be_valid }
+  it { should_not be_admin }
+
+  describe "with admin attribute set to 'true'" do
+    before do
+      @student.save!
+      @student.toggle!(:admin)
+    end
+
+    it { should be_admin }
+  end
 
 	describe "when given_name is not present" do
 		before { @student.given_name = " "}

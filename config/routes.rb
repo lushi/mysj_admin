@@ -1,10 +1,11 @@
 MysjAdmin::Application.routes.draw do
-  root to: 'sessions#new'
+  root to: 'students#show'
 
   resources :students
   resources :sessions, only: [:new, :create, :destroy]
 
-  match '/signin', to: 'sessions#new'
+  get '/signin', to: 'sessions#new'
+  match '/me', to: 'students#show'
   match '/signout', to: 'sessions#destroy', via: :delete
 
   # The priority is based upon order of creation:

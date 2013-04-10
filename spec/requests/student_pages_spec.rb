@@ -4,11 +4,50 @@ describe "Student pages" do
 
 	subject { page }
 
-	describe "index" do
+	let (:student) { FactoryGirl.create(:student) }
+	before { sign_in student }
+
+	it "should not list 'Add a new student'" do
+		page.should_not have_selector('li', text: 'Add a new student')
+	end
+
+	describe "admin adding a new student" do
+		let(:admin) { FactoryGirl.create(:admin) }
 		before do
-			sign_in FactoryGirl.create(:student)
-			FactoryGirl.create(:student, given_name: "Bob", surname: "Smith", email: "bsmith@example.com", enrolled_now: true)
-			FactoryGirl.create(:student, given_name: "Ben", surname: "Smith", email: "ben@example.com", enrolled_now: false)
+			sign_in admin
+			visit new_student_path
+		end
+
+		let(:submit) { "Create new student" }
+
+		describe "with invalid information" do
+			it "should not create a student" do
+				expect { click_button submit }.not_to change(Student, :count)
+			end
+		end
+
+		describe "with valid information" do
+			before do
+				fill_in "Given name", with: "Jane"
+				fill_in "Surname", with: "Doe"
+				fill_in "Email", with: "janedoe@example.com"
+				fill_in "Password", with: "12345678"
+				fill_in "Confirmation", with: "12345678"
+			end
+
+			it "should create a user" do
+				expect { click_button submit }.to change(Student, :count).by(1)
+			end
+		end
+	end
+
+
+	describe "index" do
+
+		let (:student) { FactoryGirl.create(:student) }
+
+		before do
+			sign_in student
 			visit students_path
 		end
 
@@ -19,6 +58,32 @@ describe "Student pages" do
 			Student.find_all_by_enrolled_now(true).each do |s|
 				page.should have_selector('li', text: s.given_name)
 				page.should have_selector('li', text: s.surname)
+			end
+		end
+
+		it "should not list students not enrolled now" do
+			Student.find_all_by_enrolled_now(false).each do |s|
+				page.should_not have_select('li', text: s.given_name)
+				page.should_not have_select('li', text: s.surname)
+			end
+		end
+
+		describe "delete links" do
+
+			it { should_not have_link('delete') }
+
+			describe "as an admin user" do
+				let(:admin) { FactoryGirl.create(:admin) }
+				before do
+					sign_in admin
+					visit students_path
+				end
+
+				it { should have_link('delete', href: student_path(Student.first)) }
+				it "should be able to delete another user" do
+					expect { click_link('delete') }.to change(Student, :count).by(-1)
+				end
+				it { should_not have_link('delete', href: student_path(admin)) }
 			end
 		end
 	end

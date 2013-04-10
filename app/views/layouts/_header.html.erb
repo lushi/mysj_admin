@@ -1,10 +1,11 @@
-<%= link_to "MYSJ Home", '#', id: "logo" %>
+<%= link_to "MYSJ Home", root_path, id: "logo" %>
 <ul>
 	<% if signed_in? %>
 		<li><%= link_to "Students", students_path %></li>
-		<li><%= link_to "My info", current_student %></li>
+		<li><%= link_to "#{current_student.given_name}", current_student %></li>
 		<li><%= link_to "Settings", edit_student_path(current_student) %></li>
 		<li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+		<li><%= link_to("Add a new student", new_student_path) if current_student.admin?%></li>
 	<% else %>
 		<li> <%= link_to "Sign in", signin_path %></li>
 	<% end %>

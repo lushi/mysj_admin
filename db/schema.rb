@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410152058) do
+ActiveRecord::Schema.define(:version => 20130410161925) do
 
   create_table "students", :force => true do |t|
     t.string   "surname"
     t.string   "email"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "password_digest"
     t.string   "given_name"
     t.string   "auth_token"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20130410152058) do
     t.boolean  "enrolled_now"
     t.string   "home_phone"
     t.string   "cell_phone"
+    t.boolean  "admin",           :default => false
   end
 
   add_index "students", ["auth_token"], :name => "index_students_on_auth_token"

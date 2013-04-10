@@ -1,2 +1,23 @@
-<h1>Students#new</h1>
-<p>Find me in app/views/students/new.html.erb</p>
+<% provide(:title, 'New student') %>
+<h1>Add a New Student</h1>
+
+<%= form_for(@student) do |f| %>
+	<%= render 'shared/error_messages' %>
+
+	<%= f.label :given_name %>
+	<%= f.text_field :given_name %>
+
+	<%= f.label :surname %>
+	<%= f.text_field :surname %>
+
+	<%= f.label :email %>
+	<%= f.text_field :email %>
+
+	<%= f.label :password %>
+	<%= f.password_field :password %>
+
+	<%= f.label :password_confirmation, "Confirmation" %>
+	<%= f.password_field :password_confirmation %>
+
+	<%= f.submit "Create new student" %>
+<% end %>
