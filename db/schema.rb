@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409212903) do
+ActiveRecord::Schema.define(:version => 20130410152058) do
 
   create_table "students", :force => true do |t|
     t.string   "surname"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20130409212903) do
     t.integer  "generation"
     t.string   "concentration"
     t.boolean  "enrolled_now"
+    t.string   "home_phone"
+    t.string   "cell_phone"
   end
 
   add_index "students", ["auth_token"], :name => "index_students_on_auth_token"
