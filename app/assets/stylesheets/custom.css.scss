@@ -1,0 +1,63 @@
+@import "bootstrap";
+
+/* mixins, variables, etc */
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* universal */
+
+html {
+	overflow-y: scroll;
+}
+
+body {
+	padding-top: 25px;
+}
+
+section {
+	overflow: auto;
+}
+
+textarea {
+	resize: vertical;
+}
+
+.center {
+	text-align: center;
+}
+
+.center h1 {
+	margin-bottom: 10px;
+}
+
+/* header */
+#logo {
+	float: left;
+	margin-right:  10px;
+	font-size: 1.7em;
+	letter-spacing: -1px;
+	padding-top: 9px;
+	color: #c3c3c3;
+}
+
+#logo:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+	width: 80%;
+	padding: 10px;
+	margin-bottom:  15px;
+	@include box_sizing;
+}
+
+input {
+	height: auto !important;
+}
