@@ -7,7 +7,7 @@ class PaymentsController < ApplicationController
 
 	def new
 		@payment = Payment.new
-		@students = Student.find_all_by_enrolled_now(true)
+		@students = Student.order("given_name ASC").find_all_by_enrolled_now(true)
 	end
 
 	def create
@@ -15,7 +15,7 @@ class PaymentsController < ApplicationController
 		@payment = @student.payments.build(params[:payment])
 		if @payment.save
 			flash[:success] = "Payment record for #{@student.given_name} added!"
-      redirect_to '/payments/new'
+      redirect_to new_payment_url
     else
     	@students = Student.find_all_by_enrolled_now(true)
       render 'new'
@@ -28,6 +28,13 @@ class PaymentsController < ApplicationController
 		else
 			@payments = current_student.payments.joins(:student).order(sort_column + " " + sort_direction)
 		end
+	end
+
+	def destroy
+		payment = Payment.find(params[:id])
+		payment.destroy
+		flash[:success] = "Record deleted."
+		redirect_to payments_url
 	end
 
 	private

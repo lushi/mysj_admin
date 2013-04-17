@@ -7,6 +7,8 @@
 		<th><%= payment.method %></th>
 		<th><%= payment.for %></th>
 		<th><%= payment.memo %></th>
-		<th><%= payment.created_at %></th>
-	</tr>
+		<th><%= payment.created_at.to_date %></th>
+		<th><% if current_student.admin? %>
+		| <%= link_to "delete", payment, method: :delete, data: { confirm: "You sure? The record will be permanently deleted."} %>
+		<% end %></th>
 </tbody>
