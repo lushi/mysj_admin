@@ -4,7 +4,7 @@ describe "Student pages" do
 
 	subject { page }
 
-	let (:student) { FactoryGirl.create(:student) }
+	let(:student) { FactoryGirl.create(:student) }
 	before { sign_in student }
 
 	it "should not list 'Add a new student'" do
@@ -90,11 +90,25 @@ describe "Student pages" do
 
 	describe "profile page" do
 		let(:student) { FactoryGirl.create(:student) }
-		before { sign_in(student) }
-		before { visit student_path(student) }
+  #   let!(:payment1) do
+  #     FactoryGirl.create(:payment, student: student, amount_cents: 10000)
+  #   end
+		# let!(:payment2) do
+  #     FactoryGirl.create(:payment, student: student, amount_cents: 20000)
+  #   end
+
+		before do
+			sign_in(student)
+			visit student_path(student)
+		end
 
 		it { should have_selector('h1', text: student.given_name && student.surname)}
 		it { should have_selector('title', text: student.given_name && student.surname)}
+
+		# describe "payments" do
+		# 	it { should have_amount_cents(payment1.amount_cents) }
+		# 	it { should have_amount_cents(payment2.amount_cents) }
+		# end
 	end
 
 	describe "edit" do

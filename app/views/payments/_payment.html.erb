@@ -1,0 +1,12 @@
+<tbody>
+	<tr>
+		<th><%= payment.student.given_name %></th>
+		<th><%= payment.student.surname %></th>
+		<th><%= number_with_precision(payment.amount_cents.to_f / 100, precision: 2) %></th>
+		<th><%= payment.currency %></th>
+		<th><%= payment.method %></th>
+		<th><%= payment.for %></th>
+		<th><%= payment.memo %></th>
+		<th><%= payment.created_at %></th>
+	</tr>
+</tbody>

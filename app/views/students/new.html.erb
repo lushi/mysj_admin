@@ -2,7 +2,7 @@
 <h1>Add a New Student</h1>
 
 <%= form_for(@student) do |f| %>
-	<%= render 'shared/error_messages' %>
+	<%= render 'shared/error_messages', object: f.object %>
 
 	<%= f.label :given_name %>
 	<%= f.text_field :given_name %>

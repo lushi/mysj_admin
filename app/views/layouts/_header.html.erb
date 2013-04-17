@@ -6,12 +6,13 @@
 				<ul class="nav nav-pills pull-right">
 					<% if signed_in? %>
 						<li><%= link_to "Hi, #{current_student.given_name}", current_student %></li>
-						<li><%= link_to "Current students", students_path %></li>
+						<li><%= link_to "Payments", payments_path %><li>
 						<li><%= link_to "Settings", edit_student_path(current_student) %></li>
-						<li class="active"><%= link_to("Add a new student", new_student_path) if current_student.admin?%></li>
+						<li><%= link_to "All students", students_path if current_student.admin? %></li>
+						<li class="active"><%= link_to("Add a new student", new_student_path) if current_student.admin? %></li>
 						<li><%= link_to "Sign out", signout_path, method: "delete"%></li>
 					<% else %>
-						<li> <%= link_to "Sign in", signin_path%></li>
+						<li> <%= link_to "Sign in", signin_path %></li>
 					<% end %>
 				</ul>
 			</nav>

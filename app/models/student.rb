@@ -21,12 +21,13 @@
 #  shirt_size      :string(255)
 #  pants_size      :string(255)
 #  shoe_size       :string(255)
-#  status          :string(255)
-#  generation      :integer
-#  concentration   :string(255)
-#  enrolled_now    :boolean
+#  status          :string(255)      default("student")
+#  generation      :integer          default(1)
+#  concentration   :string(255)      default("wing chun")
+#  enrolled_now    :boolean          default(TRUE)
 #  home_phone      :string(255)
 #  cell_phone      :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 class Student < ActiveRecord::Base
@@ -36,6 +37,10 @@ class Student < ActiveRecord::Base
                   :generation, :concentration, :enrolled_now, :home_phone, :cell_phone)
 
   has_secure_password
+
+  has_many :payments
+  has_many :payment_plan_choices, dependent: :destroy
+  has_many :payment_plans, through: :payment_plan_choices
 
   before_save { |s| s.email = email.downcase }
   before_save :create_auth_token

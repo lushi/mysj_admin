@@ -1,0 +1,33 @@
+<% provide(:title, 'Add payment') %>
+<h1>Add a New Payment</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@payment) do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<%= select_tag(:student_id,
+					options_for_select(@students.map { |s| ["#{s.given_name} #{s.surname}", s.id] }))
+			%>
+			<%= f.label :currency %>
+			<%= f.select(:currency, [['USD', 'USD'], ['RMB', 'RMB']]) %>
+
+			<%= f.label :amount_cents, "Amount"%>
+			<%= f.number_field :amount_cents %>
+
+			<%= f.label :method %>
+			<%= f.select(:method, [['Check', 'check'], ['Cash', 'cash'], ['Credit', 'credit']]) %>
+
+			<%= f.label :for %>
+			<%= f.select(:for, [['Tuition', 'tuition'], ['Disciple fee', 'disciple'], ['Form', 'form'],
+													['Registration', 'registration'], ['Test', 'test'],
+													['Other - specify in memo', 'other']])
+			%>
+
+			<%= f.label :memo, "Memo (optional)" %>
+			<%= f.text_field :memo %>
+
+			<%= f.submit "Create payment record" %>
+		<% end %>
+	</div>
+</div>

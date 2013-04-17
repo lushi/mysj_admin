@@ -21,12 +21,13 @@
 #  shirt_size      :string(255)
 #  pants_size      :string(255)
 #  shoe_size       :string(255)
-#  status          :string(255)
-#  generation      :integer
-#  concentration   :string(255)
-#  enrolled_now    :boolean
+#  status          :string(255)      default("student")
+#  generation      :integer          default(1)
+#  concentration   :string(255)      default("wing chun")
+#  enrolled_now    :boolean          default(TRUE)
 #  home_phone      :string(255)
 #  cell_phone      :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 require 'spec_helper'
@@ -70,6 +71,8 @@ describe Student do
   it { should respond_to(:enrolled_now?) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:payments) }
+  it { should respond_to(:payment_plans) }
 
 	it { should be_valid }
   it { should_not be_admin }
@@ -167,5 +170,58 @@ describe Student do
   describe "remember token" do
     before { @student.save }
     its(:auth_token) { should_not be_blank }
+  end
+
+  describe "payment_plan associations" do
+    let(:payment_plan) { FactoryGirl.create(:payment_plan) }
+    before do
+      @student.save
+      @student.payment_plans << payment_plan
+      @student.payment_plans << payment_plan
+    end
+
+    it "should be joined with payment_plans" do
+      @student.payment_plans.should be_include(payment_plan)
+    end
+
+    it "should allow diplicates of students and payment_plans" do
+      @student.payment_plans.count.should == 2
+    end
+
+    it "should destroy associated payment plan choice, but not payment plan" do
+      payment_plan_choices = @student.payment_plan_choices.dup
+      payment_plans = @student.payment_plans.dup
+      @student.destroy
+      payment_plan_choices.each do |choice|
+        PaymentPlanChoice.find_by_id(choice.id).should be_nil
+      end
+      payment_plans.each do |plan|
+        PaymentPlan.find_by_id(plan.id).should_not be_nil
+      end
+    end
+    describe "when link between student and a payment plan is deleted" do
+      before do
+        @student.payment_plans.delete(payment_plan)
+      end
+
+      it "should not delete associated records in students" do
+        Student.find_by_email(@student.email).should_not be_nil
+      end
+    end
+  end
+
+
+  describe "payments associations" do
+    before { @student.save }
+    let!(:older_payment) do
+      FactoryGirl.create(:payment, student: @student, created_at: 1.year.ago)
+    end
+    let!(:newer_payment) do
+      FactoryGirl.create(:payment, student: @student, created_at: 1.month.ago)
+    end
+
+    it "should have the payments in the right (descending) order" do
+      @student.payments.should == [newer_payment, older_payment]
+    end
   end
 end

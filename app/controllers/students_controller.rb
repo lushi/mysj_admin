@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
 	before_filter :signed_in_check
 	before_filter :right_student_check, only: [:edit, :update]
-  before_filter :admin_check, only: [:new, :create, :destroy]
+  before_filter :admin_check, only: [:new, :create, :destroy, :index]
 
   def new
     @student = Student.new
@@ -35,7 +35,7 @@ class StudentsController < ApplicationController
   end
 
   def index
-    @students = Student.find_all_by_enrolled_now(true)
+    @students = Student.all
   end
 
   def destroy
@@ -47,19 +47,8 @@ class StudentsController < ApplicationController
 
   private
 
-  	def signed_in_check
-      unless signed_in?
-        store_location
-    		redirect_to signin_url, notice: "Please sign in."
-      end
-  	end
-
-  	def right_student_check
-  		@student = Student.find(params[:id])
-  		redirect_to(root_path) unless current_student?(@student)
-  	end
-
-    def admin_check
-      redirect_to(root_path) unless current_student.admin?
+    def right_student_check
+      @student = Student.find(params[:id])
+      redirect_to(root_path) unless current_student?(@student)
     end
 end

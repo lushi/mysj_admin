@@ -11,7 +11,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410210829) do
+ActiveRecord::Schema.define(:version => 20130417163841) do
+
+  create_table "payment_plan_choices", :force => true do |t|
+    t.integer  "payment_plan_id"
+    t.integer  "student_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "payment_plans", :force => true do |t|
+    t.string   "name"
+    t.integer  "amount_cents"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "currency"
+  end
+
+  create_table "payments", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "amount_cents"
+    t.string   "currency"
+    t.string   "method"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "for"
+    t.string   "memo"
+  end
+
+  add_index "payments", ["student_id", "created_at"], :name => "index_payments_on_student_id_and_created_at"
 
   create_table "students", :force => true do |t|
     t.string   "surname"

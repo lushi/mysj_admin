@@ -25,4 +25,17 @@ FactoryGirl.define do
 			admin true
 		end
 	end
+
+	factory :payment_plan do
+		name 									"tuition-quarterly"
+		amount_cents					"45000"
+		currency							"USD
+"	end
+
+	factory :payment do
+		amount_cents					"42000"
+		currency							"USD"
+		method								"check"
+		student
+	end
 end

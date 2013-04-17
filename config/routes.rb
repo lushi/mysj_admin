@@ -1,8 +1,9 @@
 MysjAdmin::Application.routes.draw do
-  root to: 'students#show'
-
   resources :students
   resources :sessions, only: [:new, :create, :destroy]
+  resources :payments, except: [:edit, :update]
+
+  root to: 'students#show'
 
   get '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

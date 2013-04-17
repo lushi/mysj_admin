@@ -24,7 +24,7 @@ describe "Authentication" do
   			click_button "Sign in"
   		end
 
-      it { should have_link('Students', href: students_path) }
+      it { should have_link('Current students', href: students_path) }
       it { should have_link('Sign out', href: signout_path) }
       it { should have_link(student.given_name, href: student_path(student))}
       it { should_not have_link('Sign in', href: signin_path) }
