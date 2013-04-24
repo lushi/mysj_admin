@@ -2,3 +2,31 @@
 <h1>
 	<%= @student.given_name %> <%= @student.surname %>
 </h1>
+<h3>
+  <%= @student.status %>
+</h3>
+<p>
+  <%= @student.enrolled_now %>
+</p>
+
+<h2>Personal Information</h2>
+<ul>
+  <li>Sex: <%= @student.sex %></li>
+  <li>Date of Birth: <%= @student.date_of_birth %></li>
+  <li>Occupation: <%= @student.occupation %></li>
+  <li>Home phone: <%= @student.home_phone %></li>
+  <li>Cell phone: <%= @student.cell_phone %></li>
+</ul>
+<p>Address: <br>
+  <%= @student.street%>
+  <%= @student.city + ", " + @student.state + " " + @student.zipcode %>
+  <%= @student.country %>
+</p>
+
+<h2>School Record</h2>
+<ul>
+  <li>Concentration: <%= @student.concentration %></li>
+  <li>Shirt size: <%= @student.shirt_size %></li>
+  <li>Pants size: <%= @student.pants_size %></li>
+  <li>Shoe size: <%= @student.shoe_size %></li>
+</ul>
